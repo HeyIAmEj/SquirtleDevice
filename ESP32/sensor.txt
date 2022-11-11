@@ -1,0 +1,1 @@
+{"sensor5": "mp:530,pp:30,pt:20,value:0", "sensor4": "mp:530,pp:30,pt:20,value:0", "sensor1": "mp:530,pp:30,pt:20,value:0", "sensor3": "mp:530,pp:30,pt:20,value:0", "sensor2": "mp:530,pp:30,pt:20,value:0"}

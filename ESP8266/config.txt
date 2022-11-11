@@ -1,0 +1,1 @@
+{"wifi_pass": "julie777", "device_id": "1", "wifi_ssid": "Julie", "client_id": "1", "status": "true"}
