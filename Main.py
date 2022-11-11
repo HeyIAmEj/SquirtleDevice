@@ -7,6 +7,8 @@ from Loops import *
 from StationMode import *
 from AccessPointMode import *
 from GlobalConst import *
+import uasyncio
+
 
 
 # Variaveis e Constantes
@@ -49,7 +51,8 @@ else:
 # Loop caller
 if (isStaOn and running_mode == "sta"):
     print("Mode STA")
-    status_sta = sta_loop(sta)
+    #status_sta = sta_loop(sta)
+    status_sta = uasyncio.run(sta_loop(sta))
 
 elif(isApOn and running_mode == "ap"):
     print("Modo AP")
