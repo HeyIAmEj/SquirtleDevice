@@ -9,14 +9,7 @@ error_times = 0
 
 async def sta_loop(sta):
     print("entrou no loop")
-    while True:
-        for x in range(0, 4):
-            print("led")
-            Utils.successLed().on()
-            await uasyncio.sleep_ms(100)
-            Utils.successLed().off()
-            await uasyncio.sleep_ms(100)
-        
+    while True:        
         uasyncio.create_task(ligarBomba())
         uasyncio.create_task(payload_send(sta))
         await uasyncio.sleep_ms(5000)
@@ -42,28 +35,23 @@ async def payload_send(sta):
     if(sta.station.isconnected()):
         error_times = 0
         print("STA Conectado... Success: "+str(success_times))
-        #Utils.blinkSuccess()
+        Utils.blinkSuccess()
         
         if(success_times == 2):
             Utils.alertLed().on()
-            #get info
-            #send payload
-            print("instanciando payloadsensor")
             payloadSensor = PayloadSensor()
-            print("enviando payload")
+            print("Enviando payload")
             payloadSensor.send()
             
             success_times = 0
             Utils.alertLed().off()
         else:  
-            #time.sleep(GlobalConst.WAIT_XSHORT)
             success_times += 1
     else:
         print("Dispositivo não está conectado")
         if(error_times > 2):
-#             Utils.blinkError()
+            Utils.blinkError()
             return False
-#         time.sleep(GlobalConst.CONNECTION_TRY_AGAIN)
 
 
 
