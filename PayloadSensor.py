@@ -32,7 +32,6 @@ class PayloadSensor():
         return json_object
     
     def get_sensors_info(self):
-        print("Entrando")
         sensorinfo = SensorInfo()
         
         self.sensor1 = str(sensorinfo.sensor1Analog())
@@ -55,18 +54,14 @@ class PayloadSensor():
         
         print("Status: "+self.status)
         self.status = True if self.status == "Ativado" else False
-
         
     def send(self):
         # obtem informacoes dos sensores
         self.get_sensors_info()
-        print("informações recebidas")
         #prepara o payload
         data = self.prepare_payload()
-        print("\n\nPayload: ")
-        print(data)
-        print("\n\n\n")
-                
+        print("Payload: ")
+        print(data)                
         try:
             # realiza envio do payload
             header_data = { "content-type": 'application/json; charset=utf-8', "devicetype": '1'}

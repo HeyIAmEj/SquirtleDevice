@@ -3,6 +3,12 @@ import time
 import ujson as json
 
 class Utils:
+    def modeButton():
+        return Pin(39, Pin.IN, Pin.PULL_UP)
+    def pump1():
+        return Pin(5, Pin.OUT)
+    def pump2():
+        return Pin(18, Pin.OUT)
     def successLed():
         return Pin(15, Pin.OUT)
     def alertLed():
@@ -33,7 +39,6 @@ class Utils:
             time.sleep(0.1)
             
     def get_wifi_config():
-        print("Getting Device Config")
         try:
             config_file = open("config.txt", "r")
             config = config_file.read()
@@ -43,7 +48,7 @@ class Utils:
                 config = json.loads(config)
                 
                 if(config["wifi_ssid"] != "" and config["wifi_pass"] != ""):
-                    print(config)
+                    #print(config)
                     return config
             return False
         except:
@@ -51,7 +56,6 @@ class Utils:
         
         
     def get_sensor_config():
-        print("Getting Sensor Config")
         try:
             config_file = open("sensor.txt", "r")
             config = config_file.read()
