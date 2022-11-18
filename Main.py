@@ -7,6 +7,8 @@ from StationMode import *
 from AccessPointMode import *
 from GlobalConst import *
 import uasyncio
+import sys
+import machine
 
 print("entrou")
 
@@ -77,6 +79,8 @@ if(status_sta == False or status_ap == False):
     print("REINICIAR DISPOSITIVO")
     Utils.alertLed().on()
     Utils.errorLed().on()
+    time.sleep(3)
+    machine.reset()
     
     
     
