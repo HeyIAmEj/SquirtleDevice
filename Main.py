@@ -1,13 +1,16 @@
 # Imports
 import esp, gc
-esp.osdebug(esp.LOG_DEBUG)
 gc.collect
 from Utils import *
 from Loops import *
 from StationMode import *
 from AccessPointMode import *
 from GlobalConst import *
+import uasyncio
+import sys
+import machine
 
+print("entrou")
 
 # Variaveis e Constantes
 running_mode = ""
@@ -20,20 +23,26 @@ status_ap = "ok"
 
 # Starters
 Utils.turnOffLeds()
+Utils.pump1().off()
+Utils.pump2().off()
 
-
+time.sleep(3)
 
 # Wifi mode
-running_mode = "sta"
+if(Utils.modeButton().value() == 1):
+    running_mode = "ap"
+else:
+    running_mode = "sta"
 
 #Wifi setup
 if(running_mode == "sta"):
     print("Iniciando modo STA")
     sta = StationMode()
     try:
+        
         sta.station.disconnect()
     except Exception as e:
-        print(e)
+        print("Erro na inicalização STA: "+e)
         pass
     isStaOn = sta.start()
 else:
@@ -42,14 +51,14 @@ else:
         ap = AccessPointMode()
         isApOn = True
     except Exception as e:
-        print("Erro")
-        print(e)
+        print("Erro na inicalização AP: "+e)
 
 
 # Loop caller
 if (isStaOn and running_mode == "sta"):
     print("Mode STA")
-    status_sta = sta_loop(sta)
+    #status_sta = sta_loop(sta)
+    status_sta = uasyncio.run(sta_loop(sta))
 
 elif(isApOn and running_mode == "ap"):
     print("Modo AP")
@@ -70,6 +79,8 @@ if(status_sta == False or status_ap == False):
     print("REINICIAR DISPOSITIVO")
     Utils.alertLed().on()
     Utils.errorLed().on()
+    time.sleep(3)
+    machine.reset()
     
     
     
